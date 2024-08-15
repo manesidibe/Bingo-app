@@ -18,7 +18,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+    // Dans app/Http/Middleware/VerifyCsrfToken.php
     protected $except = [
-        // Ajoutez ici les routes que vous souhaitez exclure de la vérification CSRF
+        'prizes/*/restore',
     ];
+
 }

@@ -32,7 +32,7 @@ class LoginController extends Controller
                 return redirect('/login')->withErrors(['You do not have access to the admin area.']);
             }
 
-            return redirect()->route('dashboard');
+            return redirect()->route('template');
         }
 
         return back()->withErrors([

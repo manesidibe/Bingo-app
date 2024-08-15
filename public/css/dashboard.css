@@ -215,5 +215,6 @@ button:hover {
 
 /* Espacement entre la barre de recherche et la liste des campagnes */
 .dashboard-container > .search-input-container {
-    margin-bottom: 30px; /* Ajustez cette valeur pour augmenter ou diminuer l'espace */
+    margin-bottom: 1px; /* Ajustez cette valeur pour augmenter ou diminuer l'espace */
 }
+

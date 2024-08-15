@@ -30,6 +30,11 @@ class CampaignController extends Controller
         return view('campaigns.dashboard', compact('campaigns'));
     }
 
+    public function template(Request $request)
+    {
+
+        return view('pages.dashboadtest');
+    }
 
 
     public function create()
@@ -39,12 +44,23 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
-        $campaign = new Campaign();
-        $campaign->fill($request->all());
-        $campaign->save();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-        return redirect()->route('campaigns.index');
+        Campaign::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
+
+        return redirect()->route('campaigns.index')->with('success', 'Campaign created successfully!');
     }
+
 
     public function edit($id)
     {
@@ -59,19 +75,22 @@ class CampaignController extends Controller
         return redirect()->route('campaigns.index')->with('status', 'Campaign updated successfully!');
     }
 
+
     public function archive($id)
     {
         $campaign = Campaign::findOrFail($id);
-        $campaign->archived = true; // Assurez-vous que ce champ existe dans votre table
+        $campaign->archived = true;
         $campaign->save();
 
         return response()->json(['message' => 'Campaign archived successfully!']);
     }
+
     public function archivedCampaigns()
     {
         $campaigns = Campaign::where('archived', true)->get();
         return view('campaigns.archived', compact('campaigns'));
     }
+
     public function restore($id)
     {
         $campaign = Campaign::findOrFail($id);
@@ -80,5 +99,7 @@ class CampaignController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
 
 }

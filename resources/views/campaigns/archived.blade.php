@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archived Campaigns</title>
     <link rel="stylesheet" href="{{ asset('css/archive.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         function restoreCampaign(campaignId) {
             axios.put(`/campaigns/${campaignId}/restore`)
                 .then(response => {
